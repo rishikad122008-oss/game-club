@@ -3,374 +3,464 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Internet Playground 🎀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internet Playground 2.0 💿</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;900&display=swap');
 
-* {
-    box-sizing: border-box;
+:root {
+ --pink:#ff36b7;
+ --blue:#00e5ff;
+ --purple:#9d4edd;
+ --bg:#100522;
+ --card:#21103c;
+ --text:white;
 }
 
+* {box-sizing:border-box}
+
 body {
-    margin: 0;
-    font-family: 'Nunito', sans-serif;
-    background: #fff0f7;
-    color: #49365c;
-    overflow-x: hidden;
+ margin:0;
+ background:radial-gradient(circle at top,#36105d,var(--bg) 65%);
+ color:var(--text);
+ font-family:Nunito,sans-serif;
+ min-height:100vh;
+ transition:.3s;
+}
+
+body.light {
+ --bg:#ffe1f4;
+ --card:#fff0fc;
+ --text:#35104c;
+ background:linear-gradient(135deg,#ffb8e5,#b5caff);
 }
 
 header {
-    text-align: center;
-    padding: 35px 15px;
-    background: linear-gradient(135deg, #ffb8dc, #c8b5ff, #b5eaff);
-    border-bottom: 5px dotted white;
+ text-align:center;
+ padding:35px 12px;
+ border-bottom:2px solid var(--pink);
+ box-shadow:0 5px 25px #ff36b755;
 }
 
 header h1 {
-    font-size: clamp(30px, 6vw, 55px);
-    margin: 0;
-    font-weight: 900;
-    text-shadow: 3px 3px white;
+ font-family:'Press Start 2P',monospace;
+ color:var(--pink);
+ text-shadow:3px 3px var(--blue),0 0 20px var(--pink);
+ font-size:clamp(20px,4vw,35px);
+ line-height:1.7;
 }
 
-header p {
-    font-weight: 800;
+header p {color:var(--blue);font-weight:900}
+
+.container {max-width:1050px;margin:auto;padding:20px}
+
+.welcome,.card,.profile,.secret {
+ background:var(--card);
+ border:1px solid var(--pink);
+ border-radius:18px;
+ padding:20px;
+ box-shadow:0 0 15px #ff36b733;
 }
 
-.badge {
-    display: inline-block;
-    background: white;
-    padding: 7px 16px;
-    border-radius: 30px;
-    font-size: 12px;
+.welcome {text-align:center;margin-bottom:20px}
+
+h2 {color:var(--blue)}
+
+button {
+ background:linear-gradient(120deg,var(--pink),var(--purple));
+ color:white;
+ border:0;
+ padding:12px 18px;
+ border-radius:12px;
+ font-weight:900;
+ cursor:pointer;
+ margin:5px;
+ transition:.2s;
 }
 
-.container {
-    max-width: 1050px;
-    margin: auto;
-    padding: 25px 15px;
-}
+button:hover {transform:scale(1.08);box-shadow:0 0 15px var(--pink)}
 
-.welcome {
-    text-align: center;
-    background: white;
-    padding: 25px;
-    border: 3px solid #edc1e1;
-    border-radius: 25px;
-    box-shadow: 5px 5px #e6c9ff;
-    margin-bottom: 30px;
-}
-
-.welcome h2 {
-    margin-top: 0;
+input {
+ padding:12px;
+ border-radius:10px;
+ border:2px solid var(--blue);
+ background:var(--bg);
+ color:var(--text);
+ max-width:100%;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:16px;
 }
 
-.card {
-    background: white;
-    padding: 22px;
-    border-radius: 22px;
-    border: 2px solid #edc9ed;
-    box-shadow: 4px 4px #e6d2ff;
-    text-align: center;
-    transition: .25s;
-}
+.card {text-align:center;transition:.25s}
+.card:hover {transform:translateY(-5px);box-shadow:0 0 25px #00e5ff66}
 
-.card:hover {
-    transform: translateY(-6px) rotate(-1deg);
-}
-
-.card h3 {
-    margin: 5px 0;
-}
-
-.icon {
-    font-size: 38px;
-}
-
-button {
-    background: #c5aaff;
-    color: #49365c;
-    border: none;
-    border-radius: 15px;
-    padding: 11px 17px;
-    font-family: inherit;
-    font-weight: 900;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: .2s;
-}
-
-button:hover {
-    background: #ffb8dc;
-    transform: scale(1.05);
-}
+.icon {font-size:40px}
 
 .result {
-    margin-top: 15px;
-    min-height: 45px;
-    background: #fff0f8;
-    padding: 12px;
-    border-radius: 13px;
-    font-weight: 800;
+ margin-top:12px;
+ padding:12px;
+ border-radius:12px;
+ background:#ffffff12;
+ min-height:45px;
+ font-weight:900;
 }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    font-weight: 800;
-}
+.profile {margin-bottom:20px;text-align:center}
 
-input {
-    padding: 10px;
-    border: 2px solid #e4c7ff;
-    border-radius: 12px;
-    width: 80px;
-    font-family: inherit;
-    text-align: center;
-}
+.secret {margin-top:20px;text-align:center;display:none}
 
 #colourBox {
-    width: 100%;
-    height: 65px;
-    border-radius: 15px;
-    margin-top: 12px;
-    border: 2px dashed white;
+ height:60px;
+ border-radius:12px;
+ margin-top:10px;
+ border:2px solid white;
 }
 
-.small {
-    font-size: 12px;
-    opacity: .7;
+footer {text-align:center;padding:30px;color:var(--blue)}
+
+#intro {
+ position:fixed;
+ inset:0;
+ z-index:20;
+ background:radial-gradient(circle,#39105c,#080014);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ padding:20px;
 }
 
-.sparkle {
-    position: fixed;
-    pointer-events: none;
-    z-index: 10;
-    animation: float 2s forwards;
+.intro-box {max-width:500px}
+
+.intro-box h1 {
+ font-family:'Press Start 2P';
+ color:var(--pink);
+ font-size:clamp(22px,5vw,38px);
+ line-height:1.8;
+ text-shadow:3px 3px var(--blue);
 }
 
-@keyframes float {
-    from {transform: translateY(0); opacity: 1;}
-    to {transform: translateY(-100px); opacity: 0;}
-}
+.hidden {display:none!important}
+
+.pixel {color:var(--pink);font-size:20px}
+
 </style>
 </head>
 
 <body>
 
+<div id="intro">
+ <div class="intro-box">
+  <div style="font-size:65px">💿🦋✨</div>
+  <h1>WELCOME TO THE INTERNET PLAYGROUND</h1>
+  <p style="color:#00e5ff">Your little corner of internet chaos.</p>
+  <input id="usernameInput" placeholder="Enter your username">
+  <br><br>
+  <button onclick="enterSite()">ENTER THE PLAYGROUND ✨</button>
+  <p style="color:white;font-size:12px">EST. 2026 • Y2K EDITION</p>
+ </div>
+</div>
+
 <header>
-    <span class="badge">✦ EST. 2026 ✦ INTERNET MAGIC ✦</span>
-    <h1>🌐 THE INTERNET PLAYGROUND</h1>
-    <p>Your little escape from the boring internet.</p>
+ <div class="pixel">★ ✦ ★ ✦ ★</div>
+ <h1>THE INTERNET PLAYGROUND</h1>
+ <p>✧ THE INTERNET IS YOUR PLAYGROUND ✧</p>
+ <button onclick="toggleTheme()">🌙 TOGGLE MODE</button>
 </header>
 
-<div class="container">
+<main class="container">
+
+<section class="profile">
+ <h2>👾 PLAYER PROFILE</h2>
+ <h3 id="playerName">PLAYER ONE</h3>
+ <p>Level: Internet Explorer ✨</p>
+ <p>🏆 Points: <span id="points">0</span></p>
+ <p>Badges: <span id="badges">None yet!</span></p>
+</section>
 
 <section class="welcome">
-    <h2>HIIII, INTERNET EXPLORER! 🎀</h2>
-    <p>Welcome to your tiny corner of chaos.</p>
-    <p>There are no rules here. Just click things and discover surprises.</p>
-    <strong>✨ Current status: PROBABLY PROCRASTINATING ✨</strong>
+ <h2 id="welcomeText">HELLO, INTERNET EXPLORER!</h2>
+ <p>Welcome to the weirdest little corner of the internet.</p>
+ <p>Click around. Discover things. Collect points.</p>
+ <strong style="color:var(--pink)">NO BORING PEOPLE ALLOWED. JUST KIDDING. EVERYONE'S WELCOME.</strong>
 </section>
 
 <div class="grid">
 
 <div class="card">
-    <div class="icon">🎲</div>
-    <h3>Random Chaos</h3>
-    <p>Need some unnecessary entertainment?</p>
-    <button onclick="chaos()">UNLEASH CHAOS</button>
-    <div class="result" id="chaosResult">Waiting for chaos...</div>
+ <div class="icon">🎲</div>
+ <h3>CHAOS GENERATOR</h3>
+ <p>Activate random internet nonsense.</p>
+ <button onclick="chaos()">UNLEASH CHAOS</button>
+ <div class="result" id="chaosResult">Awaiting chaos...</div>
 </div>
 
 <div class="card">
-    <div class="icon">🔮</div>
-    <h3>Fortune Teller</h3>
-    <p>Your extremely questionable future.</p>
-    <button onclick="fortune()">PREDICT MY FUTURE</button>
-    <div class="result" id="fortuneResult">The crystal ball is sleeping.</div>
+ <div class="icon">🔮</div>
+ <h3>FORTUNE TELLER</h3>
+ <p>What does the future hold?</p>
+ <button onclick="fortune()">PREDICT!</button>
+ <div class="result" id="fortuneResult">Crystal ball offline.</div>
 </div>
 
 <div class="card">
-    <div class="icon">🧠</div>
-    <h3>Personality Lab</h3>
-    <p>Discover your totally scientific identity.</p>
-    <button onclick="personality()">REVEAL MY TYPE</button>
-    <div class="result" id="personalityResult">Who are you really?</div>
+ <div class="icon">🎨</div>
+ <h3>COLOUR LAB</h3>
+ <p>Generate your aesthetic.</p>
+ <button onclick="colour()">GENERATE</button>
+ <div id="colourBox"></div>
+ <div class="result" id="colourResult">No colour selected.</div>
 </div>
 
 <div class="card">
-    <div class="icon">🎨</div>
-    <h3>Colour Lab</h3>
-    <p>Generate your colour of the moment.</p>
-    <button onclick="colour()">GENERATE COLOUR</button>
-    <div id="colourBox"></div>
-    <div class="result" id="colourResult">No colour selected.</div>
+ <div class="icon">💭</div>
+ <h3>SHOWER THOUGHTS</h3>
+ <p>Question reality for a second.</p>
+ <button onclick="thought()">THINK!</button>
+ <div class="result" id="thoughtResult">Brain loading...</div>
 </div>
 
 <div class="card">
-    <div class="icon">💭</div>
-    <h3>Shower Thoughts</h3>
-    <p>Random thoughts nobody asked for.</p>
-    <button onclick="thought()">MAKE ME THINK</button>
-    <div class="result" id="thoughtResult">Brain loading...</div>
+ <div class="icon">🧠</div>
+ <h3>PERSONALITY LAB</h3>
+ <p>Discover your internet identity.</p>
+ <button onclick="personality()">REVEAL ME</button>
+ <div class="result" id="personalityResult">Who are you?</div>
 </div>
 
 <div class="card">
-    <div class="icon">🎁</div>
-    <h3>Mystery Box</h3>
-    <p>You have absolutely no idea what's inside.</p>
-    <button onclick="mystery()">OPEN THE BOX</button>
-    <div class="result" id="mysteryResult">🎁 ???</div>
+ <div class="icon">🎁</div>
+ <h3>MYSTERY BOX</h3>
+ <p>Something unexpected awaits.</p>
+ <button onclick="mystery()">OPEN BOX</button>
+ <div class="result" id="mysteryResult">🎁 ???</div>
 </div>
 
 <div class="card">
-    <div class="icon">🕹️</div>
-    <h3>Number Guessing</h3>
-    <p>Guess a number between 1 and 10!</p>
-    <input type="number" id="guess" min="1" max="10">
-    <br>
-    <button onclick="guessNumber()">GUESS!</button>
-    <div class="result" id="gameResult">Your challenge awaits.</div>
+ <div class="icon">🕹️</div>
+ <h3>NUMBER ARCADE</h3>
+ <p>Guess a number from 1 to 10.</p>
+ <input type="number" id="guess" min="1" max="10">
+ <br>
+ <button onclick="guessNumber()">GUESS</button>
+ <div class="result" id="gameResult">Your challenge awaits.</div>
 </div>
 
 <div class="card">
-    <div class="icon">💌</div>
-    <h3>Daily Compliment</h3>
-    <p>A tiny reminder that you're doing okay.</p>
-    <button onclick="compliment()">GIVE ME ONE</button>
-    <div class="result" id="complimentResult">Click for a little kindness.</div>
+ <div class="icon">💌</div>
+ <h3>DAILY COMPLIMENT</h3>
+ <p>A little positivity from the internet.</p>
+ <button onclick="compliment()">OPEN MESSAGE</button>
+ <div class="result" id="complimentResult">Click me!</div>
+</div>
+
+<div class="card">
+ <div class="icon">🎵</div>
+ <h3>MUSIC CORNER</h3>
+ <p>Play some retro vibes.</p>
+ <button onclick="music()">🎶 PLAY / PAUSE</button>
+ <div class="result" id="musicResult">Music is off.</div>
 </div>
 
 </div>
-</div>
+
+<section class="secret" id="secretRoom">
+ <h2>🔐 SECRET ROOM UNLOCKED!</h2>
+ <p>You discovered the hidden corner of the internet.</p>
+ <p>Congratulations, explorer. You have excellent curiosity.</p>
+ <div style="font-size:40px">🌌🦋💿✨</div>
+ <p>Secret message: Never lose your curiosity.</p>
+</section>
+
+<section class="card" style="margin-top:20px">
+ <h2>🔐 SECRET ACCESS</h2>
+ <p>Somewhere on the internet, a secret awaits.</p>
+ <input id="secretCode" placeholder="Enter secret code">
+ <br>
+ <button onclick="unlock()">UNLOCK</button>
+ <div class="result" id="secretResult">Hint: What year did the Y2K era begin?</div>
+</section>
+
+</main>
 
 <footer>
-    ✨ Made with curiosity, chaos and a little bit of magic. ✨
-    <p class="small">THE INTERNET PLAYGROUND © 2026</p>
+ <div>✦ MADE WITH CHAOS, CURIOSITY & INTERNET MAGIC ✦</div>
+ <p>THE INTERNET PLAYGROUND © 2026</p>
 </footer>
 
 <script>
 
-const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+let points=0;
+let secretNumber=Math.floor(Math.random()*10)+1;
+let audioContext;
+let musicPlaying=false;
+let oscillator;
 
-function chaos() {
-    const messages = [
-        "BREAKING NEWS: A potato has become CEO.",
-        "Your socks are planning a revolution.",
-        "The moon just left you on read.",
-        "You have been selected for absolutely nothing.",
-        "A pigeon knows your secrets.",
-        "Congratulations! You are today's main character.",
-        "Somewhere, a spoon is having an existential crisis.",
-        "Your brain has 47 tabs open."
-    ];
-    document.getElementById("chaosResult").innerText = pick(messages);
+function enterSite(){
+ const name=document.getElementById('usernameInput').value.trim()||'PLAYER ONE';
+ localStorage.setItem('playgroundName',name);
+ document.getElementById('playerName').innerText=name.toUpperCase();
+ document.getElementById('welcomeText').innerText='WELCOME, '+name.toUpperCase()+'!';
+ document.getElementById('intro').classList.add('hidden');
 }
 
-function fortune() {
-    const messages = [
-        "A surprisingly good day is approaching.",
-        "You will find something you thought was lost.",
-        "Your next snack will be extraordinary.",
-        "An unexpected laugh is coming.",
-        "Your future involves questionable decisions.",
-        "A tiny victory awaits you.",
-        "You will soon discover a new obsession."
-    ];
-    document.getElementById("fortuneResult").innerText = pick(messages);
+const savedName=localStorage.getItem('playgroundName');
+if(savedName){
+ document.getElementById('usernameInput').value=savedName;
+ document.getElementById('playerName').innerText=savedName.toUpperCase();
+ document.getElementById('welcomeText').innerText='WELCOME, '+savedName.toUpperCase()+'!';
 }
 
-function personality() {
-    const types = [
-        "The Professional Overthinker 🧠",
-        "The Chaotic Genius ⚡",
-        "The Sleepy Philosopher 🌙",
-        "The Walking Plot Twist 🎭",
-        "The Human Golden Retriever ☀️",
-        "The Mysterious Side Character 👀",
-        "The Certified Daydreamer ☁️"
-    ];
-    document.getElementById("personalityResult").innerText = pick(types);
+function earn(){
+ points+=10;
+ document.getElementById('points').innerText=points;
+ if(points>=50){
+  document.getElementById('badges').innerText='🌟 Internet Explorer';
+ }
 }
 
-function colour() {
-    const hex = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, "0");
-    document.getElementById("colourBox").style.background = hex;
-    document.getElementById("colourResult").innerText = hex.toUpperCase();
+function pick(arr){
+ return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function thought() {
-    const thoughts = [
-        "Do fish ever get thirsty?",
-        "Your reflection has never seen you from behind.",
-        "Every old person was once a teenager with a playlist.",
-        "The word 'bed' looks like a tiny bed.",
-        "Somewhere in the world, someone is having the best day of their life.",
-        "We never actually see our own face directly.",
-        "A calendar is basically a countdown with decorations."
-    ];
-    document.getElementById("thoughtResult").innerText = pick(thoughts);
+function chaos(){
+ document.getElementById('chaosResult').innerText=pick([
+ 'A pigeon has challenged you to a dance battle.',
+ 'Your socks are planning a revolution.',
+ 'A potato has become the CEO of Google.',
+ 'The moon has left you on read.',
+ 'Your brain has 47 tabs open.',
+ 'Breaking news: Nobody knows what is happening.'
+ ]);
+ earn();
 }
 
-function mystery() {
-    const surprises = [
-        "🎉 YOU WON AN INVISIBLE TROPHY!",
-        "🐸 A frog has spiritually adopted you.",
-        "🍓 You deserve a strawberry.",
-        "🌈 Your imaginary unicorn says hello.",
-        "💌 A reminder: you matter.",
-        "🪩 CONGRATULATIONS. YOU ARE FABULOUS.",
-        "🐧 A penguin has approved your existence."
-    ];
-    document.getElementById("mysteryResult").innerText = pick(surprises);
+function fortune(){
+ document.getElementById('fortuneResult').innerText=pick([
+ 'A tiny victory is heading your way.',
+ 'You will discover a new favourite song.',
+ 'An unexpected laugh is approaching.',
+ 'Your next snack will be legendary.',
+ 'Something nice might happen today.',
+ 'Your future contains many plot twists.'
+ ]);
+ earn();
 }
 
-let secret = Math.floor(Math.random()*10)+1;
-
-function guessNumber() {
-    const value = Number(document.getElementById("guess").value);
-    const result = document.getElementById("gameResult");
-
-    if (value < 1 || value > 10 || !Number.isInteger(value)) {
-        result.innerText = "Enter a whole number between 1 and 10!";
-    } else if (value === secret) {
-        result.innerText = "🎉 YOU GOT IT! YOU'RE A GENIUS!";
-        secret = Math.floor(Math.random()*10)+1;
-    } else {
-        result.innerText = value < secret ? "Too low! Try again 👀" : "Too high! Try again 👀";
-    }
+function colour(){
+ const hex='#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+ document.getElementById('colourBox').style.background=hex;
+ document.getElementById('colourResult').innerText=hex.toUpperCase();
+ earn();
 }
 
-function compliment() {
-    const compliments = [
-        "You bring something unique to the world.",
-        "Your curiosity is a wonderful thing.",
-        "You deserve kindness, including from yourself.",
-        "You're allowed to be a work in progress.",
-        "You make the world a little more interesting.",
-        "Your efforts count, even when nobody notices."
-    ];
-    document.getElementById("complimentResult").innerText = pick(compliments);
+function thought(){
+ document.getElementById('thoughtResult').innerText=pick([
+ 'Do fish ever get thirsty?',
+ 'The word bed looks like a tiny bed.',
+ 'Your reflection has never seen you from behind.',
+ 'Every adult was once a teenager with a playlist.',
+ 'Somewhere, someone is having the best day of their life.',
+ 'We never actually see our own face directly.'
+ ]);
+ earn();
 }
 
-document.addEventListener("click", function(e) {
-    const sparkle = document.createElement("span");
-    sparkle.className = "sparkle";
-    sparkle.innerText = "✨";
-    sparkle.style.left = e.clientX + "px";
-    sparkle.style.top = e.clientY + "px";
-    document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 2000);
-});
+function personality(){
+ document.getElementById('personalityResult').innerText=pick([
+ 'THE PROFESSIONAL OVERTHINKER 🧠',
+ 'THE CHAOTIC GENIUS ⚡',
+ 'THE SLEEPY PHILOSOPHER 🌙',
+ 'THE WALKING PLOT TWIST 🎭',
+ 'THE CERTIFIED DAYDREAMER ☁️',
+ 'THE HUMAN SUNSHINE ☀️'
+ ]);
+ earn();
+}
+
+function mystery(){
+ document.getElementById('mysteryResult').innerText=pick([
+ '🐸 A frog has spiritually adopted you.',
+ '🍓 You deserve a strawberry.',
+ '🎉 YOU WON AN INVISIBLE TROPHY!',
+ '🪩 You are officially fabulous.',
+ '💌 A reminder: you matter.',
+ '🐧 A penguin approves of you.'
+ ]);
+ earn();
+}
+
+function guessNumber(){
+ const guess=Number(document.getElementById('guess').value);
+ const result=document.getElementById('gameResult');
+ if(!Number.isInteger(guess)||guess<1||guess>10){
+  result.innerText='Enter a number between 1 and 10!';
+ }else if(guess===secretNumber){
+  result.innerText='🎉 CORRECT! YOU WON 20 POINTS!';
+  points+=20;
+  document.getElementById('points').innerText=points;
+  secretNumber=Math.floor(Math.random()*10)+1;
+ }else{
+  result.innerText=guess<secretNumber?'Too low! Try again.':'Too high! Try again.';
+ }
+}
+
+function compliment(){
+ document.getElementById('complimentResult').innerText=pick([
+ 'Your curiosity is a wonderful thing.',
+ 'You deserve kindness, including from yourself.',
+ 'You are allowed to be a work in progress.',
+ 'Your efforts count, even when nobody notices.',
+ 'You bring something unique to the world.'
+ ]);
+ earn();
+}
+
+function unlock(){
+ const code=document.getElementById('secretCode').value.trim();
+ if(code==='2000'){
+  document.getElementById('secretRoom').style.display='block';
+  document.getElementById('secretResult').innerText='ACCESS GRANTED! ✨';
+  earn();
+ }else{
+  document.getElementById('secretResult').innerText='ACCESS DENIED! Try again. 👀';
+ }
+}
+
+function toggleTheme(){
+ document.body.classList.toggle('light');
+}
+
+function music(){
+ try{
+  if(!audioContext){
+   audioContext=new(window.AudioContext||window.webkitAudioContext)();
+  }
+  if(musicPlaying){
+   oscillator.stop();
+   musicPlaying=false;
+   document.getElementById('musicResult').innerText='Music is off.';
+  }else{
+   oscillator=audioContext.createOscillator();
+   const gain=audioContext.createGain();
+   oscillator.type='sine';
+   oscillator.frequency.value=440;
+   gain.gain.value=0.025;
+   oscillator.connect(gain);
+   gain.connect(audioContext.destination);
+   oscillator.start();
+   musicPlaying=true;
+   document.getElementById('musicResult').innerText='Retro beep mode activated!';
+  }
+ }catch(e){
+  document.getElementById('musicResult').innerText='Audio is unavailable.';
+ }
+}
 
 </script>
 </body>
