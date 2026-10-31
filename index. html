@@ -120,7 +120,100 @@ input {
  margin-top:10px;
  border:2px solid white;
 }
+<!-- ARCADE ROOM -->
+<section style="margin-top:35px">
 
+<h2 style="text-align:center;font-size:28px">
+🎮 THE ARCADE ROOM
+</h2>
+
+<p style="text-align:center;color:var(--blue)">
+INSERT COIN • SELECT GAME • HAVE FUN
+</p>
+
+<div class="grid">
+
+<!-- ROCK PAPER SCISSORS -->
+<div class="card">
+<div class="icon">✊</div>
+<h3>ROCK PAPER SCISSORS</h3>
+<p>Challenge the computer!</p>
+
+<button onclick="rps('Rock')">✊</button>
+<button onclick="rps('Paper')">✋</button>
+<button onclick="rps('Scissors')">✌️</button>
+
+<div class="result" id="rpsResult">Choose your weapon!</div>
+</div>
+
+<!-- TIC TAC TOE -->
+<div class="card">
+<div class="icon">⭕</div>
+<h3>TIC TAC TOE</h3>
+<p>Can you beat the computer?</p>
+
+<div id="tttBoard" style="
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:5px;
+max-width:210px;
+margin:15px auto;
+">
+</div>
+
+<button onclick="resetTTT()">RESTART</button>
+<div class="result" id="tttResult">Your turn! You are X.</div>
+</div>
+
+<!-- MEMORY GAME -->
+<div class="card">
+<div class="icon">🧠</div>
+<h3>MEMORY MATCH</h3>
+<p>Find all matching pairs!</p>
+
+<div id="memoryBoard" style="
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+margin-top:15px;
+"></div>
+
+<button onclick="startMemory()">NEW GAME</button>
+<div class="result" id="memoryResult">Find the matching pairs!</div>
+</div>
+
+<!-- REACTION TEST -->
+<div class="card">
+<div class="icon">⚡</div>
+<h3>REACTION TEST</h3>
+<p>Test your reaction speed!</p>
+
+<button id="reactionButton" onclick="reaction()" style="background:#ff36b7">
+START TEST
+</button>
+
+<div class="result" id="reactionResult">
+Click start and wait for green!
+</div>
+</div>
+
+<!-- LUCKY WHEEL -->
+<div class="card">
+<div class="icon">🎯</div>
+<h3>LUCKY WHEEL</h3>
+<p>Let's see what luck has planned.</p>
+
+<div style="font-size:55px" id="wheelEmoji">🎡</div>
+
+<button onclick="spinWheel()">SPIN THE WHEEL</button>
+
+<div class="result" id="wheelResult">
+Your destiny awaits...
+</div>
+</div>
+
+</div>
+</section>
 footer {text-align:center;padding:30px;color:var(--blue)}
 
 #intro {
@@ -295,7 +388,9 @@ footer {text-align:center;padding:30px;color:var(--blue)}
 
 <script>
 
-let points=0;
+let points=Number(localStorage.getItem('playgroundPoints') || 0);
+
+document.getElementById('points').innerText=points;
 let secretNumber=Math.floor(Math.random()*10)+1;
 let audioContext;
 let musicPlaying=false;
@@ -337,7 +432,22 @@ function chaos(){
  'Your brain has 47 tabs open.',
  'Breaking news: Nobody knows what is happening.'
  ]);
- earn();
+ function earn(){
+
+points += 10;
+
+localStorage.setItem('playgroundPoints',points);
+
+document.getElementById('points').innerText=points;
+
+if(points >= 50){
+
+document.getElementById('badges').innerText =
+'🌟 Internet Explorer';
+
+}
+
+}
 }
 
 function fortune(){
@@ -461,7 +571,380 @@ function music(){
   document.getElementById('musicResult').innerText='Audio is unavailable.';
  }
 }
+// ==========================
+// INTERNET PLAYGROUND ARCADE
+// ==========================
 
+// ROCK PAPER SCISSORS
+
+function rps(player) {
+
+const choices = ['Rock','Paper','Scissors'];
+const computer = pick(choices);
+
+let result = '';
+
+if(player === computer) {
+result = 'IT IS A TIE! 🤝';
+}
+else if(
+(player === 'Rock' && computer === 'Scissors') ||
+(player === 'Paper' && computer === 'Rock') ||
+(player === 'Scissors' && computer === 'Paper')
+) {
+result = 'YOU WIN! +10 POINTS 🏆';
+earn();
+}
+else {
+result = 'COMPUTER WINS! TRY AGAIN 😭';
+}
+
+document.getElementById('rpsResult').innerText =
+'You: ' + player + ' | Computer: ' + computer + '\n' + result;
+
+}
+
+
+// TIC TAC TOE
+
+let board = Array(9).fill('');
+let gameOver = false;
+
+function renderTTT() {
+
+const container = document.getElementById('tttBoard');
+
+container.innerHTML = '';
+
+board.forEach((value,index) => {
+
+const button = document.createElement('button');
+
+button.innerText = value || ' ';
+button.style.fontSize = '25px';
+button.style.height = '55px';
+button.style.margin = '0';
+
+button.onclick = () => playTTT(index);
+
+container.appendChild(button);
+
+});
+
+}
+
+function checkWinner(b) {
+
+const wins = [
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
+];
+
+for(const combo of wins) {
+
+const [a,c,d] = combo;
+
+if(b[a] && b[a] === b[c] && b[a] === b[d]) {
+return b[a];
+}
+
+}
+
+return null;
+
+}
+
+function playTTT(index) {
+
+if(board[index] || gameOver) return;
+
+board[index] = 'X';
+
+let winner = checkWinner(board);
+
+if(winner) {
+finishTTT('YOU WON! 🏆 +20 POINTS');
+earn();
+return;
+}
+
+if(board.every(cell => cell !== '')) {
+finishTTT('IT IS A DRAW! 🤝');
+return;
+}
+
+// Computer's turn
+
+const available = board
+.map((v,i) => v === '' ? i : null)
+.filter(v => v !== null);
+
+const computerMove = pick(available);
+
+board[computerMove] = 'O';
+
+winner = checkWinner(board);
+
+if(winner) {
+finishTTT('COMPUTER WON! TRY AGAIN!');
+return;
+}
+
+if(board.every(cell => cell !== '')) {
+finishTTT('IT IS A DRAW! 🤝');
+return;
+}
+
+renderTTT();
+
+}
+
+function finishTTT(message) {
+
+gameOver = true;
+
+document.getElementById('tttResult').innerText = message;
+
+renderTTT();
+
+}
+
+function resetTTT() {
+
+board = Array(9).fill('');
+gameOver = false;
+
+document.getElementById('tttResult').innerText =
+'Your turn! You are X.';
+
+renderTTT();
+
+}
+
+resetTTT();
+
+
+// MEMORY MATCH
+
+const emojis = ['🦋','🍓','🌈','💿','🐸','⭐','🎀','🍒'];
+
+let memoryCards = [];
+let flipped = [];
+let matched = 0;
+let locked = false;
+
+function startMemory() {
+
+memoryCards = [...emojis,...emojis]
+.sort(() => Math.random() - 0.5);
+
+flipped = [];
+matched = 0;
+locked = false;
+
+document.getElementById('memoryResult').innerText =
+'Find all 8 matching pairs!';
+
+renderMemory();
+
+}
+
+function renderMemory() {
+
+const container = document.getElementById('memoryBoard');
+
+container.innerHTML = '';
+
+memoryCards.forEach((emoji,index) => {
+
+const button = document.createElement('button');
+
+button.style.padding = '12px 2px';
+button.style.fontSize = '23px';
+button.style.margin = '0';
+
+button.innerText =
+matchedCards.includes(index) || flipped.includes(index)
+? emoji : '❔';
+
+button.onclick = () => flipCard(index);
+
+container.appendChild(button);
+
+});
+
+}
+
+let matchedCards = [];
+
+function flipCard(index) {
+
+if(locked ||
+flipped.includes(index) ||
+matchedCards.includes(index)) return;
+
+flipped.push(index);
+
+renderMemory();
+
+if(flipped.length === 2) {
+
+locked = true;
+
+const [a,b] = flipped;
+
+if(memoryCards[a] === memoryCards[b]) {
+
+matchedCards.push(a,b);
+matched += 1;
+
+flipped = [];
+locked = false;
+
+document.getElementById('memoryResult').innerText =
+'MATCH FOUND! ✨ ' + matched + '/8';
+
+if(matched === 8) {
+
+document.getElementById('memoryResult').innerText =
+'YOU WON! MEMORY MASTER! 🏆';
+
+earn();
+earn();
+
+}
+
+renderMemory();
+
+} else {
+
+setTimeout(() => {
+
+flipped = [];
+locked = false;
+
+renderMemory();
+
+},900);
+
+}
+
+}
+
+}
+
+startMemory();
+
+
+// REACTION TEST
+
+let reactionStart = 0;
+let reactionTimeout;
+let waiting = false;
+
+function reaction() {
+
+const button = document.getElementById('reactionButton');
+const result = document.getElementById('reactionResult');
+
+if(waiting) {
+
+clearTimeout(reactionTimeout);
+waiting = false;
+
+result.innerText = 'Too early! Try again 😭';
+
+button.innerText = 'TRY AGAIN';
+button.style.background = '#ff36b7';
+
+return;
+
+}
+
+waiting = true;
+
+button.innerText = 'WAIT FOR GREEN...';
+button.style.background = '#ffcc00';
+
+result.innerText = 'Get ready...';
+
+reactionTimeout = setTimeout(() => {
+
+reactionStart = performance.now();
+
+button.style.background = '#00cc66';
+button.innerText = 'CLICK NOW!';
+
+}, 1500 + Math.random()*3000);
+
+button.onclick = function() {
+
+if(!waiting) return;
+
+if(reactionStart === 0) {
+
+clearTimeout(reactionTimeout);
+waiting = false;
+
+result.innerText = 'Too early! Try again.';
+
+button.innerText = 'START TEST';
+button.style.background = '#ff36b7';
+
+return;
+
+}
+
+const time = Math.round(performance.now()-reactionStart);
+
+waiting = false;
+reactionStart = 0;
+
+result.innerText =
+'YOUR TIME: ' + time + ' ms ⚡';
+
+button.innerText = 'PLAY AGAIN';
+button.style.background = '#ff36b7';
+
+if(time < 350) earn();
+
+};
+
+}
+
+
+// LUCKY WHEEL
+
+function spinWheel() {
+
+const prizes = [
+'🌟 +10 POINTS!',
+'🦋 BUTTERFLY BLESSINGS!',
+'🍓 STRAWBERRY ENERGY!',
+'💿 RETRO LEGEND!',
+'🎀 YOU ARE FABULOUS!',
+'⭐ +20 POINTS!'
+];
+
+const prize = pick(prizes);
+
+document.getElementById('wheelEmoji').innerText = '🎡';
+
+document.getElementById('wheelResult').innerText =
+'YOU GOT: ' + prize;
+
+if(prize.includes('POINTS')) {
+
+points += prize.includes('+20') ? 20 : 10;
+
+localStorage.setItem('playgroundPoints',points);
+
+document.getElementById('points').innerText = points;
+
+}
+
+}
 </script>
 </body>
 </html>
