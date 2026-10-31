@@ -1,74 +1,378 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hey, I'm Here 🌱</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Internet Playground 🎀</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background: #fff0f7;
+    color: #49365c;
+    overflow-x: hidden;
+}
+
+header {
+    text-align: center;
+    padding: 35px 15px;
+    background: linear-gradient(135deg, #ffb8dc, #c8b5ff, #b5eaff);
+    border-bottom: 5px dotted white;
+}
+
+header h1 {
+    font-size: clamp(30px, 6vw, 55px);
+    margin: 0;
+    font-weight: 900;
+    text-shadow: 3px 3px white;
+}
+
+header p {
+    font-weight: 800;
+}
+
+.badge {
+    display: inline-block;
+    background: white;
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.welcome {
+    text-align: center;
+    background: white;
+    padding: 25px;
+    border: 3px solid #edc1e1;
+    border-radius: 25px;
+    box-shadow: 5px 5px #e6c9ff;
+    margin-bottom: 30px;
+}
+
+.welcome h2 {
+    margin-top: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 22px;
+    border: 2px solid #edc9ed;
+    box-shadow: 4px 4px #e6d2ff;
+    text-align: center;
+    transition: .25s;
+}
+
+.card:hover {
+    transform: translateY(-6px) rotate(-1deg);
+}
+
+.card h3 {
+    margin: 5px 0;
+}
+
+.icon {
+    font-size: 38px;
+}
+
+button {
+    background: #c5aaff;
+    color: #49365c;
+    border: none;
+    border-radius: 15px;
+    padding: 11px 17px;
+    font-family: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .2s;
+}
+
+button:hover {
+    background: #ffb8dc;
+    transform: scale(1.05);
+}
+
+.result {
+    margin-top: 15px;
+    min-height: 45px;
+    background: #fff0f8;
+    padding: 12px;
+    border-radius: 13px;
+    font-weight: 800;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    font-weight: 800;
+}
+
+input {
+    padding: 10px;
+    border: 2px solid #e4c7ff;
+    border-radius: 12px;
+    width: 80px;
+    font-family: inherit;
+    text-align: center;
+}
+
+#colourBox {
+    width: 100%;
+    height: 65px;
+    border-radius: 15px;
+    margin-top: 12px;
+    border: 2px dashed white;
+}
+
+.small {
+    font-size: 12px;
+    opacity: .7;
+}
+
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10;
+    animation: float 2s forwards;
+}
+
+@keyframes float {
+    from {transform: translateY(0); opacity: 1;}
+    to {transform: translateY(-100px); opacity: 0;}
+}
+</style>
 </head>
 
 <body>
-<nav>
-    <a href="index.html">🌱 Home</a>
-    <a href="wins.html">🌟 My Little Wins</a>
-</nav>
-    <div class="container">
 
-        <h1>Hey, I'm Here 🌱</h1>
+<header>
+    <span class="badge">✦ EST. 2026 ✦ INTERNET MAGIC ✦</span>
+    <h1>🌐 THE INTERNET PLAYGROUND</h1>
+    <p>Your little escape from the boring internet.</p>
+</header>
 
-        <p class="subtitle">
-            You don't have to figure everything out right now.
-        </p>
+<div class="container">
 
-        <h2>How are you feeling?</h2>
+<section class="welcome">
+    <h2>HIIII, INTERNET EXPLORER! 🎀</h2>
+    <p>Welcome to your tiny corner of chaos.</p>
+    <p>There are no rules here. Just click things and discover surprises.</p>
+    <strong>✨ Current status: PROBABLY PROCRASTINATING ✨</strong>
+</section>
 
-        <div class="feelings">
+<div class="grid">
 
-            <button onclick="showFeeling('anxious')">
-                😰<br>
-                I'm anxious
-            </button>
+<div class="card">
+    <div class="icon">🎲</div>
+    <h3>Random Chaos</h3>
+    <p>Need some unnecessary entertainment?</p>
+    <button onclick="chaos()">UNLEASH CHAOS</button>
+    <div class="result" id="chaosResult">Waiting for chaos...</div>
+</div>
 
-            <button onclick="showFeeling('sad')">
-                😔<br>
-                I'm sad
-            </button>
+<div class="card">
+    <div class="icon">🔮</div>
+    <h3>Fortune Teller</h3>
+    <p>Your extremely questionable future.</p>
+    <button onclick="fortune()">PREDICT MY FUTURE</button>
+    <div class="result" id="fortuneResult">The crystal ball is sleeping.</div>
+</div>
 
-            <button onclick="showFeeling('tired')">
-                😴<br>
-                I'm exhausted
-            </button>
+<div class="card">
+    <div class="icon">🧠</div>
+    <h3>Personality Lab</h3>
+    <p>Discover your totally scientific identity.</p>
+    <button onclick="personality()">REVEAL MY TYPE</button>
+    <div class="result" id="personalityResult">Who are you really?</div>
+</div>
 
-            <button onclick="showFeeling('angry')">
-                😤<br>
-                I'm angry
-            </button>
+<div class="card">
+    <div class="icon">🎨</div>
+    <h3>Colour Lab</h3>
+    <p>Generate your colour of the moment.</p>
+    <button onclick="colour()">GENERATE COLOUR</button>
+    <div id="colourBox"></div>
+    <div class="result" id="colourResult">No colour selected.</div>
+</div>
 
-            <button onclick="showFeeling('overwhelmed')">
-                🫠<br>
-                I'm overwhelmed
-            </button>
+<div class="card">
+    <div class="icon">💭</div>
+    <h3>Shower Thoughts</h3>
+    <p>Random thoughts nobody asked for.</p>
+    <button onclick="thought()">MAKE ME THINK</button>
+    <div class="result" id="thoughtResult">Brain loading...</div>
+</div>
 
-            <button onclick="showFeeling('happy')">
-                😊<br>
-                I'm happy
-            </button>
+<div class="card">
+    <div class="icon">🎁</div>
+    <h3>Mystery Box</h3>
+    <p>You have absolutely no idea what's inside.</p>
+    <button onclick="mystery()">OPEN THE BOX</button>
+    <div class="result" id="mysteryResult">🎁 ???</div>
+</div>
 
-            <button onclick="showFeeling('confused')">
-                🤔<br>
-                I'm confused
-            </button>
+<div class="card">
+    <div class="icon">🕹️</div>
+    <h3>Number Guessing</h3>
+    <p>Guess a number between 1 and 10!</p>
+    <input type="number" id="guess" min="1" max="10">
+    <br>
+    <button onclick="guessNumber()">GUESS!</button>
+    <div class="result" id="gameResult">Your challenge awaits.</div>
+</div>
 
-            <button onclick="showFeeling('unknown')">
-                😶<br>
-                I don't know
-            </button>
+<div class="card">
+    <div class="icon">💌</div>
+    <h3>Daily Compliment</h3>
+    <p>A tiny reminder that you're doing okay.</p>
+    <button onclick="compliment()">GIVE ME ONE</button>
+    <div class="result" id="complimentResult">Click for a little kindness.</div>
+</div>
 
-        </div>
+</div>
+</div>
 
-        <div id="response"></div>
+<footer>
+    ✨ Made with curiosity, chaos and a little bit of magic. ✨
+    <p class="small">THE INTERNET PLAYGROUND © 2026</p>
+</footer>
 
-    </div>
+<script>
 
-    <script src="script.js"></script>
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
+function chaos() {
+    const messages = [
+        "BREAKING NEWS: A potato has become CEO.",
+        "Your socks are planning a revolution.",
+        "The moon just left you on read.",
+        "You have been selected for absolutely nothing.",
+        "A pigeon knows your secrets.",
+        "Congratulations! You are today's main character.",
+        "Somewhere, a spoon is having an existential crisis.",
+        "Your brain has 47 tabs open."
+    ];
+    document.getElementById("chaosResult").innerText = pick(messages);
+}
+
+function fortune() {
+    const messages = [
+        "A surprisingly good day is approaching.",
+        "You will find something you thought was lost.",
+        "Your next snack will be extraordinary.",
+        "An unexpected laugh is coming.",
+        "Your future involves questionable decisions.",
+        "A tiny victory awaits you.",
+        "You will soon discover a new obsession."
+    ];
+    document.getElementById("fortuneResult").innerText = pick(messages);
+}
+
+function personality() {
+    const types = [
+        "The Professional Overthinker 🧠",
+        "The Chaotic Genius ⚡",
+        "The Sleepy Philosopher 🌙",
+        "The Walking Plot Twist 🎭",
+        "The Human Golden Retriever ☀️",
+        "The Mysterious Side Character 👀",
+        "The Certified Daydreamer ☁️"
+    ];
+    document.getElementById("personalityResult").innerText = pick(types);
+}
+
+function colour() {
+    const hex = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, "0");
+    document.getElementById("colourBox").style.background = hex;
+    document.getElementById("colourResult").innerText = hex.toUpperCase();
+}
+
+function thought() {
+    const thoughts = [
+        "Do fish ever get thirsty?",
+        "Your reflection has never seen you from behind.",
+        "Every old person was once a teenager with a playlist.",
+        "The word 'bed' looks like a tiny bed.",
+        "Somewhere in the world, someone is having the best day of their life.",
+        "We never actually see our own face directly.",
+        "A calendar is basically a countdown with decorations."
+    ];
+    document.getElementById("thoughtResult").innerText = pick(thoughts);
+}
+
+function mystery() {
+    const surprises = [
+        "🎉 YOU WON AN INVISIBLE TROPHY!",
+        "🐸 A frog has spiritually adopted you.",
+        "🍓 You deserve a strawberry.",
+        "🌈 Your imaginary unicorn says hello.",
+        "💌 A reminder: you matter.",
+        "🪩 CONGRATULATIONS. YOU ARE FABULOUS.",
+        "🐧 A penguin has approved your existence."
+    ];
+    document.getElementById("mysteryResult").innerText = pick(surprises);
+}
+
+let secret = Math.floor(Math.random()*10)+1;
+
+function guessNumber() {
+    const value = Number(document.getElementById("guess").value);
+    const result = document.getElementById("gameResult");
+
+    if (value < 1 || value > 10 || !Number.isInteger(value)) {
+        result.innerText = "Enter a whole number between 1 and 10!";
+    } else if (value === secret) {
+        result.innerText = "🎉 YOU GOT IT! YOU'RE A GENIUS!";
+        secret = Math.floor(Math.random()*10)+1;
+    } else {
+        result.innerText = value < secret ? "Too low! Try again 👀" : "Too high! Try again 👀";
+    }
+}
+
+function compliment() {
+    const compliments = [
+        "You bring something unique to the world.",
+        "Your curiosity is a wonderful thing.",
+        "You deserve kindness, including from yourself.",
+        "You're allowed to be a work in progress.",
+        "You make the world a little more interesting.",
+        "Your efforts count, even when nobody notices."
+    ];
+    document.getElementById("complimentResult").innerText = pick(compliments);
+}
+
+document.addEventListener("click", function(e) {
+    const sparkle = document.createElement("span");
+    sparkle.className = "sparkle";
+    sparkle.innerText = "✨";
+    sparkle.style.left = e.clientX + "px";
+    sparkle.style.top = e.clientY + "px";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 2000);
+});
+
+</script>
 </body>
 </html>
+```
